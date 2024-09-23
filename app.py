@@ -7,10 +7,9 @@ import io
 # Title of the app
 st.title("Product Information Extractor")
 
-# Sidebar for API key inputs
-st.sidebar.header("API Keys")
-openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-perplexity_api_key = st.sidebar.text_input("Perplexity API Key", type="password")
+# Access API keys from st.secrets
+openai_api_key = st.secrets.get("openai_api_key", "")
+perplexity_api_key = st.secrets.get("perplexity_api_key", "")
 
 # Function to encode image to base64
 def encode_image(image):
@@ -81,7 +80,7 @@ def get_product_info(product_name, perplexity_api_key):
                 "content": f"Output the detailed ingredients and the information of the ingredients of {product_name}."
             }
         ],
-        "max_tokens": 500,
+        "max_tokens": 1500,
         "temperature": 0.2,
         "top_p": 0.9,
         "return_citations": False,
@@ -113,9 +112,9 @@ if uploaded_file is not None:
     
     # Check if API keys are provided
     if not openai_api_key:
-        st.error("Please enter your OpenAI API key in the sidebar.")
+        st.error("OpenAI API key not found in st.secrets.")
     elif not perplexity_api_key:
-        st.error("Please enter your Perplexity API key in the sidebar.")
+        st.error("Perplexity API key not found in st.secrets.")
     else:
         # Extract product name from image using OpenAI Vision API
         with st.spinner('Extracting product name using OpenAI Vision API...'):
