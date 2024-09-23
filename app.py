@@ -96,6 +96,7 @@ def get_product_info(product_name, perplexity_api_key):
 
     response = requests.post(url, headers=headers, json=payload)
     if response.status_code == 200:
+        st.write(result)
         result = response.json()
         perplexity_text = result.get("completion", "No information found.")
         return perplexity_text
