@@ -96,8 +96,8 @@ def get_product_info(product_name, perplexity_api_key):
 
     response = requests.post(url, headers=headers, json=payload)
     if response.status_code == 200:
-        st.write(result)
         result = response.json()
+        st.write(result)
         perplexity_text = result.get("completion", "No information found.")
         return perplexity_text
     else:
@@ -133,3 +133,4 @@ if uploaded_file is not None:
                 st.error("Error retrieving data from Perplexity API.")
         else:
             st.warning("Could not extract product name. Please upload another image showing the product name.")
+
