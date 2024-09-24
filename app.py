@@ -87,11 +87,11 @@ def get_product_info(product_name, perplexity_api_key):
         "search_domain_filter": [],
         "return_images": False,
         "return_related_questions": False,
-        "search_recency_filter": "all",  # Changed from "month" to "all"
+        "search_recency_filter": "year",  # Changed from "month" to "year"
         "top_k": 10,  # Increased from 0 to 10
         "stream": False,
         "presence_penalty": 0,
-        "frequency_penalty": 0.1  # Changed from 1 to 0
+        "frequency_penalty": 0.1  # Changed from 1 to 0.1
     }
 
     response = requests.post(url, headers=headers, json=payload)
