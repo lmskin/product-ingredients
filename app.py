@@ -73,25 +73,25 @@ def get_product_info(product_name, perplexity_api_key):
         "messages": [
             {
                 "role": "system",
-                "content": "As an expert assistant, your task is to find and provide the detailed ingredients and information of the ingredients for the given product. If you cannot find the exact ingredients, provide as much relevant information as possible."
+                "content": "As an expert skincare assistant, provide the detailed ingredients and their benefits for the given product. If exact ingredients are unavailable, describe typical ingredients found in similar products and their effects."
             },
             {
                 "role": "user",
                 "content": f"Please provide the detailed ingredients and information of the ingredients of {product_name}."
             }
         ],
-        "max_tokens": 1500,
-        "temperature": 0.2,
+        "max_tokens": 500,  # Reduced from 1500 to limit output length
+        "temperature": 0.7,  # Increased for more creative responses
         "top_p": 0.9,
         "return_citations": True,
         "search_domain_filter": [],
         "return_images": False,
         "return_related_questions": False,
-        "search_recency_filter": "year",  # Changed from "month" to "year"
-        "top_k": 10,  # Increased from 0 to 10
+        "search_recency_filter": "year",
+        "top_k": 10,
         "stream": False,
-        "presence_penalty": 0,
-        "frequency_penalty": 0.1  # Changed from 1 to 0.1
+        "presence_penalty": 0.5,  # Increased to discourage topic repetition
+        "frequency_penalty": 0.8   # Increased to penalize token repetition
     }
 
     response = requests.post(url, headers=headers, json=payload)
@@ -110,7 +110,6 @@ def get_product_info(product_name, perplexity_api_key):
     else:
         st.error(f"Error {response.status_code}: {response.text}")
         return None
-
 
 # Upload image file
 uploaded_file = st.file_uploader("Upload an image of the product", type=["jpg", "jpeg", "png"])
