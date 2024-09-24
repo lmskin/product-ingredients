@@ -97,7 +97,6 @@ def get_product_info(product_name, perplexity_api_key):
     if response.status_code == 200:
         try:
             result = response.json()
-            st.write(result)  # For debugging purposes
             # Extract the content from the assistant's message
             perplexity_text = result['choices'][0]['message']['content']
             return perplexity_text
