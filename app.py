@@ -110,29 +110,32 @@ def get_product_info(product_name, perplexity_api_key):
         st.error(f"Error {response.status_code}: {response.text}")
         return None
 
-# Upload image file
-uploaded_file = st.file_uploader("Upload an image of the product", type=["jpg", "jpeg", "png"])
+# Check if API keys are provided
+if not openai_api_key:
+    st.error("OpenAI API key not found in st.secrets.")
+elif not perplexity_api_key:
+    st.error("Perplexity API key not found in st.secrets.")
+else:
+    # Upload image file
+    uploaded_file = st.file_uploader("Upload an image of the product", type=["jpg", "jpeg", "png"])
 
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
-    
-    # Check if API keys are provided
-    if not openai_api_key:
-        st.error("OpenAI API key not found in st.secrets.")
-    elif not perplexity_api_key:
-        st.error("Perplexity API key not found in st.secrets.")
-    else:
+    # Input product name directly
+    product_name_input = st.text_input("Or, enter the product name directly")
+
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption='Uploaded Image.', use_column_width=True)
+
         # Extract product name from image using OpenAI Vision API
         with st.spinner('Extracting product name using OpenAI Vision API...'):
             product_name = extract_product_name_from_image(image, openai_api_key)
-        
+
         if product_name and "no product name" not in product_name.lower():
             st.success(f"Product Name: {product_name}")
             # Get product information using Perplexity API
             with st.spinner('Retrieving product information from Perplexity AI...'):
                 product_info = get_product_info(product_name, perplexity_api_key)
-            
+
             if product_info:
                 st.text_area("Product Ingredients and Information", value=product_info, height=300)
             else:
@@ -140,3 +143,17 @@ if uploaded_file is not None:
         else:
             st.warning("Could not extract product name. Please upload another image showing the product name.")
 
+    elif product_name_input.strip() != "":
+        product_name = product_name_input.strip()
+        st.success(f"Product Name: {product_name}")
+        # Get product information using Perplexity API
+        with st.spinner('Retrieving product information from Perplexity AI...'):
+            product_info = get_product_info(product_name, perplexity_api_key)
+
+        if product_info:
+            st.text_area("Product Ingredients and Information", value=product_info, height=300)
+        else:
+            st.error("Error retrieving data from Perplexity API.")
+
+    else:
+        st.info("Please upload an image or enter the product name.")
