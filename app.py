@@ -90,7 +90,6 @@ def get_product_info(product_name, perplexity_api_key):
         "search_recency_filter": "year",
         "top_k": 10,
         "stream": False,
-        "presence_penalty": 0.5,  # Increased to discourage topic repetition
         "frequency_penalty": 0.8   # Increased to penalize token repetition
     }
 
