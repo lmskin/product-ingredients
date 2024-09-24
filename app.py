@@ -91,7 +91,7 @@ def get_product_info(product_name, perplexity_api_key):
         "top_k": 10,  # Increased from 0 to 10
         "stream": False,
         "presence_penalty": 0,
-        "frequency_penalty": 0  # Changed from 1 to 0
+        "frequency_penalty": 0.1  # Changed from 1 to 0
     }
 
     response = requests.post(url, headers=headers, json=payload)
