@@ -77,7 +77,7 @@ def get_product_info(product_name, perplexity_api_key):
             },
             {
                 "role": "user",
-                "content": f"Please provide the detailed ingredients of the ingredients of {product_name}. No need markdown format."
+                "content": f"Please provide the detailed ingredients of {product_name}. No need markdown format."
             }
         ],
         "max_tokens": 1500,  # Reduced from 1000 to limit output length
