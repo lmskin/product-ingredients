@@ -80,7 +80,7 @@ def get_product_info(product_name, perplexity_api_key):
                 "content": f"Please provide the detailed ingredients and information of the ingredients of {product_name}."
             }
         ],
-        "max_tokens": 500,  # Reduced from 1500 to limit output length
+        "max_tokens": 1000,  # Reduced from 1000 to limit output length
         "temperature": 0.7,  # Increased for more creative responses
         "top_p": 0.9,
         "return_citations": True,
