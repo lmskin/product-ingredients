@@ -73,14 +73,14 @@ def get_product_info(product_name, perplexity_api_key):
         "messages": [
             {
                 "role": "system",
-                "content": "As an expert skincare assistant, provide the detailed ingredients and their benefits for the given product. If exact ingredients are unavailable, describe typical ingredients found in similar products and their effects."
+                "content": "As an expert skincare assistant, provide the detailed ingredients for the given product."
             },
             {
                 "role": "user",
-                "content": f"Please provide the detailed ingredients and information of the ingredients of {product_name}."
+                "content": f"Please provide the detailed ingredients of the ingredients of {product_name}."
             }
         ],
-        "max_tokens": 1000,  # Reduced from 1000 to limit output length
+        "max_tokens": 1500,  # Reduced from 1000 to limit output length
         "temperature": 0.7,  # Increased for more creative responses
         "top_p": 0.9,
         "return_citations": True,
