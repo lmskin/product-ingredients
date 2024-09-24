@@ -69,7 +69,7 @@ def get_product_info(product_name, perplexity_api_key):
     }
 
     payload = {
-        "model": "llama-3.1-sonar-large-128k-online",
+        "model": "llama-3.1-sonar-huge-128k-online",
         "messages": [
             {
                 "role": "system",
