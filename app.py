@@ -89,7 +89,7 @@ def get_product_info(product_name, perplexity_api_key):
         "return_related_questions": False,
         "search_recency_filter": "month",
         "top_k": 0,
-        "stream": True,
+        "stream": False,
         "presence_penalty": 0,
         "frequency_penalty": 1
     }
