@@ -73,36 +73,44 @@ def get_product_info(product_name, perplexity_api_key):
         "messages": [
             {
                 "role": "system",
-                "content": "Be precise and concise."
+                "content": "As an expert assistant, your task is to find and provide the detailed ingredients and information of the ingredients for the given product. If you cannot find the exact ingredients, provide as much relevant information as possible."
             },
             {
                 "role": "user",
-                "content": f"Output the detailed ingredients and the information of the ingredients of {product_name}."
+                "content": f"Please provide the detailed ingredients and information of the ingredients of {product_name}."
             }
         ],
         "max_tokens": 1500,
         "temperature": 0.2,
         "top_p": 0.9,
-        "return_citations": False,
+        "return_citations": True,
         "search_domain_filter": [],
         "return_images": False,
         "return_related_questions": False,
-        "search_recency_filter": "month",
-        "top_k": 0,
+        "search_recency_filter": "all",  # Changed from "month" to "all"
+        "top_k": 10,  # Increased from 0 to 10
         "stream": False,
         "presence_penalty": 0,
-        "frequency_penalty": 1
+        "frequency_penalty": 0  # Changed from 1 to 0
     }
 
     response = requests.post(url, headers=headers, json=payload)
     if response.status_code == 200:
-        result = response.json()
-        st.write(result)
-        perplexity_text = result.get("completion", "No information found.")
-        return perplexity_text
+        try:
+            result = response.json()
+            st.write(result)  # For debugging purposes
+            # Extract the content from the assistant's message
+            perplexity_text = result['choices'][0]['message']['content']
+            return perplexity_text
+        except (ValueError, KeyError, IndexError) as e:
+            st.error("Failed to parse response.")
+            st.write(f"Exception: {e}")
+            st.write("Response content:", response.text)
+            return None
     else:
         st.error(f"Error {response.status_code}: {response.text}")
         return None
+
 
 # Upload image file
 uploaded_file = st.file_uploader("Upload an image of the product", type=["jpg", "jpeg", "png"])
