@@ -123,7 +123,7 @@ else:
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded Image.', use_column_width=True)
+        st.image(image, caption='Uploaded Image.', use_container_width=True)
 
         # Extract product name from image using OpenAI Vision API
         with st.spinner('Extracting product name using OpenAI Vision API...'):
